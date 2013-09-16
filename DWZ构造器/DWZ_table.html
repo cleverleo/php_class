@@ -1,0 +1,68 @@
+<form id="pagerForm" method="post" action="__ACTION__">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="DWZ_key" value="{$_REQUEST['DWZ_key']}" />
+	<input type="hidden" name="DWZ_value" value="{$_REQUEST['DWZ_value']}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__ACTION__" method="post">
+		<div class="searchBar">
+			<select name="DWZ_key">
+				<foreach name="DWZ['keylist']" item="vo">
+					<option value="{$key}" {$_REQUEST['DWZ_key']==$key?'selected="selected"':''}>{$vo}</option>
+				</foreach>
+			</select>
+			=
+			<input type="text" name="DWZ_value" value="{$_REQUEST['DWZ_value']}" />
+			<div class="subBar">
+				<ul>
+					<li>
+						<div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">
+									检索
+								</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			{__CONTENT__}
+		</ul>
+	</div>
+
+	<table class="table" width="100%" targetType="navTab" layoutH="138">
+		<thead>
+			<foreach name="DWZ['thead']" item="vo">
+				<th>{$vo}</th>
+			</foreach>
+		</thead>
+		<tbody>
+			<foreach name="DWZ['data']" item="tr">
+				<tr target="sid_user" rel="{$tr[$DWZ['id']]}">
+					<foreach name="DWZ['key']" item="td">
+						<td>{$tr[$td]}</td>
+					</foreach>
+				</tr>
+			</foreach>
+
+		</tbody>
+	</table>
+
+	<div class="panelBar" >
+		<div class="pages">
+			<span>每页{$DWZ['numPerPage']}条,</span>
+			<span>共{$DWZ['count']}条</span>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount="{$DWZ['count']}" numPerPage="{$DWZ['numPerPage']}" pageNumShown="5" currentPage="{$DWZ['pagenum']+1}"></div>
+
+	</div>
+
+</div>

@@ -1,0 +1,56 @@
+<div class="pageContent">
+
+	<form method="post" action="__ACTION__" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<div class="pageFormContent" layoutH="58">
+			<input type="hidden" name="id" value="{$Think.get.id}" />
+			<foreach item="vo" name="DWZ">
+				<div class="unit">
+					<label>{$vo.cname}：</label>
+					<switch name="vo.type">
+						<case value="lookup">
+							<input type="text" name="{$key}" {$vo.attr} />
+							<a class="btnLook" href="{$vo.lookup}/lookup/{$key}" lookupGroup="">查找带回</a>
+							<input type="hidden" lookupGroup="" name="{$key}Lookup.id" value=""/>
+						</case>
+						<case value="radio">
+							<foreach name="vo.radio" item="radio" key="key1">
+								<input type="radio" name="{$key}" value="{$radio}" {$vo['_attr']['value']==$radio?'checked="checked"':""} />{$radio}
+							</foreach>
+						</case>
+						<case value="textarea">
+							<textarea name="{$key}" {$vo.attr}>{$vo._attr.value}</textarea>
+						</case>
+						<case value="input" break="0"></case>
+						<default />
+						<input type="text" name="{$key}" {$vo.attr}/>
+					</switch>
+
+				</div>
+			</foreach>
+			{__CONTENT__}
+		</div>
+		<div class="formBar">
+			<ul>
+				<li>
+					<div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">
+								提交
+							</button>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="button">
+						<div class="buttonContent">
+							<button type="button" class="close">
+								取消
+							</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</form>
+
+</div>
